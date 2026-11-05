@@ -1,0 +1,69 @@
+{
+  "commit": {
+    "status": "COMMIT",
+    "transfer_id": 62003,
+    "before": {
+      "2": "102969.00",
+      "3": "99971.00"
+    },
+    "after": {
+      "2": "102869.00",
+      "3": "100071.00"
+    }
+  },
+  "rollback": {
+    "status": "ROLLBACK",
+    "failure_sqlstate": "22012",
+    "unchanged_balances": true,
+    "no_transfer": true
+  },
+  "reversal": {
+    "original": 62003,
+    "compensation": 62005
+  },
+  "idempotency_mismatch": "22023 rejected",
+  "competing_withdrawals": {
+    "starting_balance": "99970.00",
+    "each_amount": "74977.50",
+    "sessions": [
+      {
+        "worker": 0,
+        "outcome": "ROLLBACK",
+        "sqlstate": "23514",
+        "error": "Insufficient funds"
+      },
+      {
+        "worker": 1,
+        "outcome": "COMMIT",
+        "transfer_id": 62006
+      }
+    ]
+  },
+  "locking": {
+    "observed_wait": [
+      "Lock",
+      "transactionid"
+    ],
+    "after_release": "COMMIT"
+  },
+  "isolation": {
+    "READ COMMITTED": {
+      "first": "99970.00",
+      "second_after_other_commit": "99971.00"
+    },
+    "REPEATABLE READ": {
+      "first": "99971.00",
+      "second_after_other_commit": "99971.00"
+    }
+  },
+  "serializable_conflict": {
+    "sqlstate": "40001",
+    "outcome": "ROLLBACK; retry whole transaction required"
+  },
+  "invariants": {
+    "net_ledger": "0.00",
+    "negative_customers": 0,
+    "malformed_transfers": 0,
+    "missing_outbox": 0
+  }
+}

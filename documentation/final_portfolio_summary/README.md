@@ -1,0 +1,2 @@
+# LMS summary
+The user-facing review PDF is Odekunle_Ayoola_301904401_PortfolioSummary_ReviewDraft.pdf in the parent submission folder. It is exactly three pages. Student independent review/reflection, assessor access and final format acceptance remain pending. The repository contains the complete evidence, which the summary does not replace. Do not upload an unreviewed draft as a final academic submission.

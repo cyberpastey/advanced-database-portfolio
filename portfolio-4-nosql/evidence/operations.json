@@ -1,0 +1,110 @@
+{
+  "version": "8.0.34",
+  "inserted": 100,
+  "filtered_sample": [
+    {
+      "event_id": "synthetic-70",
+      "wallet_id": 72,
+      "transfer_id": 71,
+      "type": "transfer_review",
+      "occurred_at": "2026-01-01 01:10:00",
+      "risk_score": 70,
+      "metadata": {
+        "device": "sim-0",
+        "rule": "synthetic_velocity"
+      }
+    },
+    {
+      "event_id": "synthetic-71",
+      "wallet_id": 73,
+      "transfer_id": 72,
+      "type": "transfer_review",
+      "occurred_at": "2026-01-01 01:11:00",
+      "risk_score": 71,
+      "metadata": {
+        "device": "sim-1",
+        "rule": "synthetic_velocity"
+      }
+    },
+    {
+      "event_id": "synthetic-72",
+      "wallet_id": 74,
+      "transfer_id": 73,
+      "type": "transfer_review",
+      "occurred_at": "2026-01-01 01:12:00",
+      "risk_score": 72,
+      "metadata": {
+        "device": "sim-2",
+        "rule": "synthetic_velocity"
+      }
+    },
+    {
+      "event_id": "synthetic-73",
+      "wallet_id": 75,
+      "transfer_id": 74,
+      "type": "transfer_review",
+      "occurred_at": "2026-01-01 01:13:00",
+      "risk_score": 73,
+      "metadata": {
+        "device": "sim-3",
+        "rule": "synthetic_velocity"
+      }
+    },
+    {
+      "event_id": "synthetic-74",
+      "wallet_id": 76,
+      "transfer_id": 75,
+      "type": "transfer_review",
+      "occurred_at": "2026-01-01 01:14:00",
+      "risk_score": 74,
+      "metadata": {
+        "device": "sim-4",
+        "rule": "synthetic_velocity"
+      }
+    }
+  ],
+  "updated": 1,
+  "deleted": 1,
+  "remaining": 99,
+  "invalid_document_error": 121,
+  "duplicate_event_error": 11000,
+  "aggregation_before_delete": [
+    {
+      "_id": "transfer_review",
+      "count": 100,
+      "meanRisk": 49.5
+    }
+  ],
+  "indexes": [
+    {
+      "v": 2,
+      "key": {
+        "_id": 1
+      },
+      "name": "_id_"
+    },
+    {
+      "v": 2,
+      "key": {
+        "event_id": 1
+      },
+      "name": "event_id_1",
+      "unique": true
+    },
+    {
+      "v": 2,
+      "key": {
+        "wallet_id": 1,
+        "occurred_at": -1
+      },
+      "name": "wallet_id_1_occurred_at_-1"
+    },
+    {
+      "v": 2,
+      "key": {
+        "risk_score": 1
+      },
+      "name": "risk_score_1"
+    }
+  ]
+}

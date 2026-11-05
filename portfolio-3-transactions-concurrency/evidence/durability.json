@@ -1,0 +1,18 @@
+{
+  "before": [
+    62007,
+    "203105181.50"
+  ],
+  "after": [
+    62007,
+    "203105181.50"
+  ],
+  "normal_restart": true,
+  "invariants": {
+    "net_ledger": "0.00",
+    "negative_customers": 0,
+    "malformed_transfers": 0,
+    "missing_outbox": 0
+  },
+  "limitation": "Normal restart only; not power-loss or restore testing"
+}

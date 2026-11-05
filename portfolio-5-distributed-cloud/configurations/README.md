@@ -1,0 +1,4 @@
+# Replication configuration
+Root compose.yaml configures the primary wal_level=logical, max_replication_slots=5 and max_wal_senders=5. The second server is a logical subscriber, not a physical standby. scripts/verify.py:p5 contains executable publication, subscription and replication-only role setup. The connection password comes from ignored .env and is excluded from evidence. Never query/export pg_subscription.subconninfo into a report.
+
+Inspect the safe fields using SELECT subname,subenabled FROM pg_subscription on the subscriber and SELECT pubname,puballtables FROM pg_publication on the primary. The demonstration publishes only distribution_lab.replication_probe. The ordinary application schema is not claimed to be replicated. Docker named volumes preserve data across normal stops/restarts. All host ports bind to 127.0.0.1.

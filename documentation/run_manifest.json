@@ -1,0 +1,320 @@
+{
+  "started_at": "2026-11-05T10:24:45.877942+00:00",
+  "activities": {
+    "p1": {
+      "status": "Completed and verified by tool execution",
+      "summary": {
+        "versions": [
+          "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+          "payflow"
+        ],
+        "rows": {
+          "customers": 2000,
+          "wallets": 2001,
+          "transfers": 2000,
+          "ledger_entries": 4000,
+          "outbox_events": 2000
+        },
+        "invariants": {
+          "net_ledger": "0.00",
+          "negative_customers": 0,
+          "malformed_transfers": 0,
+          "missing_outbox": 0
+        },
+        "negative_tests": [
+          {
+            "test": "unique_email",
+            "sqlstate": "23505",
+            "outcome": "rejected as expected",
+            "message": "duplicate key value violates unique constraint \"customers_email_key\""
+          },
+          {
+            "test": "foreign_key",
+            "sqlstate": "23503",
+            "outcome": "rejected as expected",
+            "message": "insert or update on table \"wallets\" violates foreign key constraint \"wallets_customer_id_fkey\""
+          },
+          {
+            "test": "wallet_kind",
+            "sqlstate": "23514",
+            "outcome": "rejected as expected",
+            "message": "new row for relation \"wallets\" violates check constraint \"wallets_kind_check\""
+          },
+          {
+            "test": "same_wallet",
+            "sqlstate": "22023",
+            "outcome": "rejected as expected",
+            "message": "Invalid transfer input"
+          },
+          {
+            "test": "fractional_kobo",
+            "sqlstate": "22023",
+            "outcome": "rejected as expected",
+            "message": "Invalid transfer input"
+          },
+          {
+            "test": "negative_amount",
+            "sqlstate": "22023",
+            "outcome": "rejected as expected",
+            "message": "Invalid transfer input"
+          },
+          {
+            "test": "immutable",
+            "sqlstate": "23514",
+            "outcome": "rejected as expected",
+            "message": "Financial history is append only"
+          },
+          {
+            "test": "incomplete_posting",
+            "sqlstate": "23514",
+            "outcome": "rejected as expected",
+            "message": "Unbalanced or malformed transfer 2001"
+          },
+          {
+            "test": "app_cannot_insert",
+            "sqlstate": "42501",
+            "outcome": "rejected as expected",
+            "message": "permission denied for table ledger_entries"
+          }
+        ],
+        "app_execute_transfer": 2002
+      }
+    },
+    "p2": {
+      "status": "Completed and verified by tool execution",
+      "summary": {
+        "time_range": {
+          "sql": "SELECT transfer_id,created_at,amount FROM payflow.transfers WHERE created_at>='2026-01-01 10:00:00+00' AND created_at<'2026-01-01 10:10:00+00' ORDER BY created_at,transfer_id",
+          "rows": 600,
+          "before_median_ms": 15.223,
+          "after_median_ms": 0.461,
+          "result_parity": true
+        },
+        "high_value": {
+          "sql": "SELECT transfer_id,amount FROM payflow.transfers WHERE amount>=100000 ORDER BY amount,transfer_id",
+          "rows": 2000,
+          "before_median_ms": 20.129,
+          "after_median_ms": 1.59,
+          "result_parity": true
+        }
+      }
+    },
+    "p3": {
+      "status": "Completed and verified by tool execution",
+      "summary": {
+        "commit": {
+          "status": "COMMIT",
+          "transfer_id": 62003,
+          "before": {
+            "2": "102969.00",
+            "3": "99971.00"
+          },
+          "after": {
+            "2": "102869.00",
+            "3": "100071.00"
+          }
+        },
+        "rollback": {
+          "status": "ROLLBACK",
+          "failure_sqlstate": "22012",
+          "unchanged_balances": true,
+          "no_transfer": true
+        },
+        "reversal": {
+          "original": 62003,
+          "compensation": 62005
+        },
+        "idempotency_mismatch": "22023 rejected",
+        "competing_withdrawals": {
+          "starting_balance": "99970.00",
+          "each_amount": "74977.50",
+          "sessions": [
+            {
+              "worker": 0,
+              "outcome": "ROLLBACK",
+              "sqlstate": "23514",
+              "error": "Insufficient funds"
+            },
+            {
+              "worker": 1,
+              "outcome": "COMMIT",
+              "transfer_id": 62006
+            }
+          ]
+        },
+        "locking": {
+          "observed_wait": [
+            "Lock",
+            "transactionid"
+          ],
+          "after_release": "COMMIT"
+        },
+        "isolation": {
+          "READ COMMITTED": {
+            "first": "99970.00",
+            "second_after_other_commit": "99971.00"
+          },
+          "REPEATABLE READ": {
+            "first": "99971.00",
+            "second_after_other_commit": "99971.00"
+          }
+        },
+        "serializable_conflict": {
+          "sqlstate": "40001",
+          "outcome": "ROLLBACK; retry whole transaction required"
+        },
+        "invariants": {
+          "net_ledger": "0.00",
+          "negative_customers": 0,
+          "malformed_transfers": 0,
+          "missing_outbox": 0
+        }
+      }
+    },
+    "p4": {
+      "status": "Completed and verified by tool execution",
+      "summary": {
+        "version": "8.0.34",
+        "inserted": 100,
+        "filtered_sample": [
+          {
+            "event_id": "synthetic-70",
+            "wallet_id": 72,
+            "transfer_id": 71,
+            "type": "transfer_review",
+            "occurred_at": "2026-01-01 01:10:00",
+            "risk_score": 70,
+            "metadata": {
+              "device": "sim-0",
+              "rule": "synthetic_velocity"
+            }
+          },
+          {
+            "event_id": "synthetic-71",
+            "wallet_id": 73,
+            "transfer_id": 72,
+            "type": "transfer_review",
+            "occurred_at": "2026-01-01 01:11:00",
+            "risk_score": 71,
+            "metadata": {
+              "device": "sim-1",
+              "rule": "synthetic_velocity"
+            }
+          },
+          {
+            "event_id": "synthetic-72",
+            "wallet_id": 74,
+            "transfer_id": 73,
+            "type": "transfer_review",
+            "occurred_at": "2026-01-01 01:12:00",
+            "risk_score": 72,
+            "metadata": {
+              "device": "sim-2",
+              "rule": "synthetic_velocity"
+            }
+          },
+          {
+            "event_id": "synthetic-73",
+            "wallet_id": 75,
+            "transfer_id": 74,
+            "type": "transfer_review",
+            "occurred_at": "2026-01-01 01:13:00",
+            "risk_score": 73,
+            "metadata": {
+              "device": "sim-3",
+              "rule": "synthetic_velocity"
+            }
+          },
+          {
+            "event_id": "synthetic-74",
+            "wallet_id": 76,
+            "transfer_id": 75,
+            "type": "transfer_review",
+            "occurred_at": "2026-01-01 01:14:00",
+            "risk_score": 74,
+            "metadata": {
+              "device": "sim-4",
+              "rule": "synthetic_velocity"
+            }
+          }
+        ],
+        "updated": 1,
+        "deleted": 1,
+        "remaining": 99,
+        "invalid_document_error": 121,
+        "duplicate_event_error": 11000,
+        "aggregation_before_delete": [
+          {
+            "_id": "transfer_review",
+            "count": 100,
+            "meanRisk": 49.5
+          }
+        ],
+        "indexes": [
+          {
+            "v": 2,
+            "key": {
+              "_id": 1
+            },
+            "name": "_id_"
+          },
+          {
+            "v": 2,
+            "key": {
+              "event_id": 1
+            },
+            "name": "event_id_1",
+            "unique": true
+          },
+          {
+            "v": 2,
+            "key": {
+              "wallet_id": 1,
+              "occurred_at": -1
+            },
+            "name": "wallet_id_1_occurred_at_-1"
+          },
+          {
+            "v": 2,
+            "key": {
+              "risk_score": 1
+            },
+            "name": "risk_score_1"
+          }
+        ]
+      }
+    },
+    "p5": {
+      "status": "Completed and verified by tool execution",
+      "summary": {
+        "first_observed_ms": 218.0,
+        "absent_while_disabled": true,
+        "catchup_observed_ms": 109.0,
+        "rows": [
+          [
+            1,
+            "initial synthetic marker"
+          ],
+          [
+            2,
+            "paused marker"
+          ]
+        ],
+        "subscription": [
+          [
+            "payflow_sub",
+            true
+          ]
+        ],
+        "publication": [
+          [
+            "payflow_pub",
+            false
+          ]
+        ],
+        "limitations": "Logical probe only; no cloud, HA failover, schema/sequence replication or backup restore demonstrated"
+      }
+    }
+  },
+  "finished_at": "2026-11-05T10:25:43.214414+00:00"
+}

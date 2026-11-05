@@ -34,7 +34,7 @@ MongoDB documents hold flexible risk-event metadata, indexed by event ID, wallet
 ## Ordered execution and gates
 1. Requirements and setup: confirm identity, inspect runtimes, create private repository when capability permits. Commit the actual plan.
 2. P1: implement schema, generated data, constraint checks and reconciliation. Gate: all invariants pass. Record corrections.
-3. P2: load sufficient deterministic data, collect raw results and EXPLAIN ANALYZE JSON for two queries, alternate repeated tests after warming, verify equivalent outputs, report actual timings/buffers and limitations. Gate: no invented speedup.
+3. P2: load sufficient deterministic data, collect raw results and EXPLAIN ANALYZE JSON for two queries, collect repeated tests after warming, verify equivalent outputs, report actual timings/buffers and limitations. Gate: no invented speedup.
 4. P3: successful commit, forced rollback after posting, competing withdrawals, ordered-lock transfer, READ COMMITTED versus REPEATABLE READ and SERIALIZABLE conflict. Gate: terminal states, SQLSTATE and invariants verified.
 5. P4: create validator/collection, insert synthetic events, CRUD/filter/aggregate/index/invalid-document tests. Gate: expected operations verified.
 6. P5: configure publication/subscription, wait for actual replay and compare data; test interruption/recovery if available. Gate: identify consistency/availability limits.

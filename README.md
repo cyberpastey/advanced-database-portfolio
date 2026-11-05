@@ -4,7 +4,7 @@ Student: Odekunle Ayoola | 301904401 | Miva University, 2026/2027, First Semeste
 PayFlow is a fictional Nigerian digital wallet platform. Customers register and view wallets and transfers; operations staff reconcile the ledger; fraud analysts investigate events; administrators manage availability. Only deterministic synthetic data is used. No payment service is connected.
 
 ## Reproduce
-Install Docker Desktop with Linux containers and Python 3.11+. Start Docker, then run `docker compose up -d --wait` from this directory. Install `pip install -r requirements.txt` and run `python scripts/verify.py`. The runner rebuilds **only the payflow schema in this project's database**; it is a repeatable laboratory, not a production migration. Run `docker compose down` to stop, retaining volumes. Do not run the reset against another database.
+Install Docker Desktop with Linux containers and Python 3.11+. Create the ignored .env as described in SETUP.md. Start Docker, then run `docker compose up -d --wait` from this directory. Install `pip install -r requirements.txt` and run `python scripts/verify.py`. The runner rebuilds the payflow schema, replaces the project MongoDB events collection and recreates the replication probe in this project's containers; it is a repeatable laboratory, not a production migration. Run `docker compose down` to stop, retaining volumes. Do not run the reset against another database.
 
 Default lab connections: PostgreSQL localhost:55432, database/user payflow; MongoDB localhost:57017. Both bind to loopback. Credentials are supplied in an ignored .env file; see SETUP.md. Raw evidence is saved per activity. A failed run is not evidence of a passing implementation. See documentation/validation_report.md for actual status.
 

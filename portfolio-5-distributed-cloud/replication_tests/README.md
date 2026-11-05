@@ -1,0 +1,2 @@
+# Replication test protocol
+The verified p5 function creates matching probe tables, publication and subscriber; inserts marker 1 and polls for visibility; disables the subscription and waits for its worker to stop; commits marker 2 on primary and asserts absence on subscriber; re-enables the subscription and polls for marker 2. Sorted primary/subscriber rows must be equal. Observed poll latency is not a guaranteed replication lag SLA. Actual outputs are in ../evidence/replication.json.

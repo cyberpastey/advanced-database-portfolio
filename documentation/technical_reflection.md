@@ -1,14 +1,12 @@
-# Student reflection - pending individual contribution
-This is a worksheet, not a completed personal reflection. Do not submit it unchanged.
+# Evidence-based technical reflection - draft for student review
+The PayFlow design separates transaction intent from the signed ledger entries that determine wallet balances. Deriving balances removes a mutable balance cache, but makes balance reads depend on aggregation and indexing. Deferred constraints check posting shape at commit; ordered wallet locks and application permissions address the concurrency problem that normalisation alone cannot solve.
 
-After independently running and inspecting the project, write a short first-person account supported by the logs:
-1. Explain why you chose ledger-derived balances, and a disadvantage you observed.
-2. Describe one design or code change you personally reviewed or made, referring to its actual commit.
-3. Identify a real failing test/environment issue, the evidence, the fix and the result.
-4. Explain an actual before/after plan and why its timing did or did not improve.
-5. Explain what you observed in concurrent withdrawals and the two isolation snapshots.
-6. Compare MongoDB event flexibility with PostgreSQL transaction guarantees.
-7. Describe observed replication lag/catch-up and the limits of the local setup.
-8. State what remains untested and how you would improve it.
+The bulk-load failure was instructive at the implementation level: one transaction acquired 60,000 request-key advisory locks and exhausted PostgreSQL shared lock memory. Batches of 500 shortened lock lifetimes without weakening transfer-level atomicity. Two subsequent parameterisation errors were corrected before accepting the load. These were tool-observed development events, not a claim of personal student execution.
 
-Recorded environment observation: the initial Docker command could not reach dockerDesktopLinuxEngine. AI-generated code and analysis do not establish that the student personally learned or executed anything.
+Both selected indexes reduced median execution time in this dataset, and the plans changed from sequential scans to bitmap access. The time-range plan still sorted its results; the index did not remove every operation. Warm-cache measurements and a fixed baseline-first order limit the strength of the performance conclusion. Production throughput and write amplification were not measured.
+
+The concurrency test committed one competing withdrawal and rejected the other with insufficient funds, preserving a nonnegative balance. READ COMMITTED saw a later committed change; REPEATABLE READ retained its earlier snapshot; SERIALIZABLE rejected a conflicting update with 40001. These observations support explicit locking and complete-transaction retries rather than assuming a single isolation setting solves every race.
+
+MongoDB was suitable for variable event metadata, while the PostgreSQL ledger remained authoritative. The local replication experiment showed both propagation and a deliberately stale subscriber during a pause. It did not establish automatic failover, cloud resilience or backup recoverability. Further work should test delivery retries, authenticated/TLS deployment, backup restoration and operational recovery targets.
+
+Student ownership status: Ayoola reports good prior experience. The project was developed and tested with Codex assistance. Independent student reruns, corrections and personal learning conclusions have not yet been recorded. Review this draft, reproduce the key tests and add only experiences that actually occurred before submitting it as an individual reflection.

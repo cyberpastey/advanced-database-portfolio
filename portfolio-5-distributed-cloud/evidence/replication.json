@@ -1,0 +1,28 @@
+{
+  "first_observed_ms": 218.0,
+  "absent_while_disabled": true,
+  "catchup_observed_ms": 109.0,
+  "rows": [
+    [
+      1,
+      "initial synthetic marker"
+    ],
+    [
+      2,
+      "paused marker"
+    ]
+  ],
+  "subscription": [
+    [
+      "payflow_sub",
+      true
+    ]
+  ],
+  "publication": [
+    [
+      "payflow_pub",
+      false
+    ]
+  ],
+  "limitations": "Logical probe only; no cloud, HA failover, schema/sequence replication or backup restore demonstrated"
+}

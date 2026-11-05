@@ -12,4 +12,7 @@ Default lab connections: PostgreSQL localhost:55432, database/user payflow; Mong
 PostgreSQL is authoritative for money. An immutable double-entry ledger records every transfer. Wallet rows are locked in ascending ID order before validating available funds. Balances are derived from ledger entries rather than kept in a second mutable cache. MongoDB stores supplementary synthetic fraud events. The proposed outbox consumer is an architectural extension, not an implemented cross-database delivery system. PostgreSQL logical replication is the planned local distributed exercise; automatic failover is not provided.
 
 ## Academic ownership
-AI-assisted implementation and documentation require the student's independent review, execution and explanation. Read documentation/ai_use_declaration.md and complete the reflection after doing the exercises. No LMS submission has been made. Same-day commits cannot establish semester-long development.
+AI-assisted implementation and documentation require the student's independent review, execution and explanation. Read documentation/ai_use_declaration.md and review the reflection alongside the exercises. No LMS submission has been made. Same-day commits cannot establish semester-long development.
+
+## Presentation and access update
+Student review confirmed 5 November 2026. PDF is accepted by the LMS. The summary uses Times New Roman and black/white styling; diagrams use ordinary Arial and black/white styling. Repository visibility was changed to public at the student’s request. The official private-repository requirement still needs lecturer approval for this exception. The mandatory AI-use declaration is retained separately in documentation/ai_use_declaration.md.

@@ -1,4 +1,4 @@
-# Final validation report - review stage, 5 November 2026
+# Final validation report - student-reviewed version, 5 November 2026
 Status vocabulary: **Completed and verified**, **Implemented but not yet verified**, **Not implemented**, **Blocked by unavailable access/information**. Tool execution does not establish independent student understanding.
 
 | Requirement | Status | Evidence / remaining action |
@@ -18,16 +18,16 @@ Status vocabulary: **Completed and verified**, **Implemented but not yet verifie
 | READMEs and reproduction runner | Completed and verified | Runner executed all five phases successfully; drivers recorded |
 | Diagrams | Completed and verified | Mermaid source and SVG exports matched to schema/topology |
 | Sources and AI assistance recorded | Completed and verified | references.md and AI declaration accurately disclose tool work |
-| Independent student review/understanding | Implemented but not yet verified | Verification guide supplied; student must demonstrate actual review/reruns |
-| Individual reflection | Implemented but not yet verified | Evidence-based draft; student review/personal contribution pending |
-| Three-page summary review PDF | Completed and verified | Page count and rendered layout checked; remains a review draft |
-| Private GitHub repository | Completed and verified | cyberpastey/advanced-database-portfolio; private flag checked |
+| Independent student review | Completed: student-reported | Student confirmed review on 5 November 2026; no independent rerun claimed |
+| Individual reflection | Reviewed by student | Evidence-based reflection; no invented personal execution claims |
+| Three-page summary PDF | Completed and verified | Black/white, embedded Times New Roman; student reviewed technical content |
+| Repository visibility | User-directed exception | Changed to public at student request; official private-repository requirement remains unmet without lecturer approval |
 | Current progressive commits | Completed and verified | Actual current development commits only |
 | Evidence of semester-long activity | Not implemented | Cannot be manufactured retrospectively; discuss honest available history with lecturer if needed |
-| Assessor access | Blocked by unavailable access/information | Assessor username not in attachments; obtain username, invite read access, confirm acceptance |
+| Repository access | Public access | No assessor login needed; lecturer approval needed for departure from private-repository rule |
 | Upload filenames and outer folder | Completed and verified | Prefix Odekunle_Ayoola_301904401; no spaces; zip keeps normal internal source names |
-| Accepted LMS extension | Blocked by unavailable access/information | Check actual response form; supplied sources do not specify |
-| Similarity screening | Not implemented | Institution runs screening; <=20% excluding bibliography required, not guaranteed |
+| Accepted LMS extension | Completed: student-confirmed | Student confirms PDF is accepted |
+| Similarity screening | Limited preliminary check only | Source/citation review and sample exact-phrase web searches; no Turnitin score available or guaranteed |
 | Final LMS submission | Not implemented | Requires student review and explicit submission authorisation; one attempt |
 
 No automatic approval rejection occurred. Local execution needed approved host access for Docker/network/GitHub. No secrets are included in the upload zip; .env remains local and ignored. Raw output logs are genuine evidence; no screenshots were fabricated. The supplied instructions accept outputs/logs where applicable. A database-GUI screenshot collection has not been created.

@@ -1,0 +1,13 @@
+{
+  "summary_font": "Times New Roman, embedded regular and bold",
+  "diagram_font": "Arial",
+  "rendered_pages": 3,
+  "black_white_channel_checks": {
+    "mono-summary-1.png": true,
+    "mono-summary-2.png": true,
+    "mono-summary-3.png": true,
+    "er_diagram.png": true,
+    "payflow.png": true
+  },
+  "layout": "All three rendered summary pages visually checked"
+}

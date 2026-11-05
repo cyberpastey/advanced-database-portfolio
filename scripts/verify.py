@@ -70,10 +70,13 @@ def p1():
     return evidence
 
 def p2():
+    # Bound transaction-level advisory locks and deferred-trigger queues per batch.
+    for start in range(1,60001,500):
+        with connect() as batch:
+            batch.execute("SELECT payflow.post_transfer('bench-'||i,2+(i%%2000),2+((i+1)%%2000),1+(i%%100)) FROM generate_series(%s::integer,%s::integer) i",(start,start+499))
     with connect() as c:
         # Setup timestamp assignment is privileged fixture construction, not application mutation.
         c.execute("SET search_path=payflow,public")
-        c.execute("SELECT post_transfer('bench-'||i,2+(i%2000),2+((i+1)%2000),1+(i%100)) FROM generate_series(1,60000) i")
         c.execute('ALTER TABLE transfers DISABLE TRIGGER transfers_immutable')
         c.execute("UPDATE transfers SET created_at='2026-01-01'::timestamptz+(transfer_id%8640000)*interval '1 second' WHERE request_key LIKE 'bench-%'")
         # 60k rows span a day; Q8 uses this reproducible interval rather than an empty date.

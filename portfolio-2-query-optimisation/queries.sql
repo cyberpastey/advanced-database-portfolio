@@ -30,5 +30,5 @@ SELECT event_id,transfer_id,event_type,created_at,delivered_at FROM outbox_event
 WHERE delivered_at IS NULL ORDER BY event_id LIMIT 20;
 -- Q8 Selective high-value/time query used for index benchmark.
 SELECT transfer_id,created_at,amount FROM transfers
-WHERE created_at>='2026-01-20' AND created_at<'2026-01-21' AND amount>=50
+WHERE created_at>='2026-01-01 10:00:00+00' AND created_at<'2026-01-01 10:10:00+00' AND amount>=50
 ORDER BY created_at,transfer_id;

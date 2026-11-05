@@ -1,0 +1,6 @@
+# Portfolio 4 - MongoDB supplementary events (7 marks)
+Fraud-event documents vary by rule/device/channel, making embedded metadata useful. They reference synthetic wallet/transfer IDs but MongoDB does not enforce PostgreSQL foreign keys. PostgreSQL is the monetary authority. This lab seeds events from existing transfers; it does not claim a running event bridge.
+
+The runner creates payflow_lab.events with strict JSON Schema validation, inserts deterministic synthetic events, performs read/update/delete, rejects invalid risk scores and duplicate event IDs, aggregates counts/mean risk by type and records index metadata. Unique event_id supports idempotent consumption; (wallet_id,occurred_at) serves wallet timelines; risk_score serves flagged review. Do not set TTL on evidence that has a required retention period.
+
+Advantages: evolving nested metadata, straightforward event reads and aggregation. Limits: duplicated references can become stale, no cross-store atomic commit, schema/index maintenance and storage cost. A production outbox consumer would publish committed events with retries, deduplicate by event_id and monitor lag/dead letters. Consumers must not infer spendable balances from eventually consistent risk events.

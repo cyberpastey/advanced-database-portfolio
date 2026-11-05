@@ -1,0 +1,43 @@
+{
+  "$jsonSchema": {
+    "bsonType": "object",
+    "required": [
+      "event_id",
+      "wallet_id",
+      "transfer_id",
+      "type",
+      "occurred_at",
+      "risk_score",
+      "metadata"
+    ],
+    "properties": {
+      "event_id": {
+        "bsonType": "string"
+      },
+      "wallet_id": {
+        "bsonType": "int"
+      },
+      "transfer_id": {
+        "bsonType": "int"
+      },
+      "type": {
+        "enum": [
+          "login",
+          "transfer_review",
+          "device_change"
+        ]
+      },
+      "occurred_at": {
+        "bsonType": "date"
+      },
+      "risk_score": {
+        "bsonType": "int",
+        "minimum": 0,
+        "maximum": 100
+      },
+      "metadata": {
+        "bsonType": "object"
+      }
+    }
+  }
+}

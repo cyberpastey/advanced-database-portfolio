@@ -1,0 +1,76 @@
+{
+  "versions": [
+    "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+    "payflow"
+  ],
+  "rows": {
+    "customers": 2000,
+    "wallets": 2001,
+    "transfers": 2000,
+    "ledger_entries": 4000,
+    "outbox_events": 2000
+  },
+  "invariants": {
+    "net_ledger": "0.00",
+    "negative_customers": 0,
+    "malformed_transfers": 0,
+    "missing_outbox": 0
+  },
+  "negative_tests": [
+    {
+      "test": "unique_email",
+      "sqlstate": "23505",
+      "outcome": "rejected as expected",
+      "message": "duplicate key value violates unique constraint \"customers_email_key\""
+    },
+    {
+      "test": "foreign_key",
+      "sqlstate": "23503",
+      "outcome": "rejected as expected",
+      "message": "insert or update on table \"wallets\" violates foreign key constraint \"wallets_customer_id_fkey\""
+    },
+    {
+      "test": "wallet_kind",
+      "sqlstate": "23514",
+      "outcome": "rejected as expected",
+      "message": "new row for relation \"wallets\" violates check constraint \"wallets_kind_check\""
+    },
+    {
+      "test": "same_wallet",
+      "sqlstate": "22023",
+      "outcome": "rejected as expected",
+      "message": "Invalid transfer input"
+    },
+    {
+      "test": "fractional_kobo",
+      "sqlstate": "22023",
+      "outcome": "rejected as expected",
+      "message": "Invalid transfer input"
+    },
+    {
+      "test": "negative_amount",
+      "sqlstate": "22023",
+      "outcome": "rejected as expected",
+      "message": "Invalid transfer input"
+    },
+    {
+      "test": "immutable",
+      "sqlstate": "23514",
+      "outcome": "rejected as expected",
+      "message": "Financial history is append only"
+    },
+    {
+      "test": "incomplete_posting",
+      "sqlstate": "23514",
+      "outcome": "rejected as expected",
+      "message": "Unbalanced or malformed transfer 2001"
+    },
+    {
+      "test": "app_cannot_insert",
+      "sqlstate": "42501",
+      "outcome": "rejected as expected",
+      "message": "permission denied for table ledger_entries"
+    }
+  ],
+  "app_execute_transfer": 2002
+}

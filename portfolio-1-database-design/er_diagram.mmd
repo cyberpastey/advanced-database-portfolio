@@ -1,0 +1,33 @@
+erDiagram
+ CUSTOMERS ||--o| WALLETS : owns
+ WALLETS ||--o{ TRANSFERS : sends
+ WALLETS ||--o{ TRANSFERS : receives
+ TRANSFERS ||--|{ LEDGER_ENTRIES : posts_two
+ WALLETS ||--o{ LEDGER_ENTRIES : records
+ TRANSFERS ||--|| OUTBOX_EVENTS : emits
+ TRANSFERS o|--o| TRANSFERS : reverses
+ CUSTOMERS { bigint customer_id PK
+ text full_name
+ text email UK }
+ WALLETS { bigint wallet_id PK
+ bigint customer_id FK
+ text kind
+ text currency }
+ TRANSFERS { bigint transfer_id PK
+ text request_key UK
+ bigint sender_id FK
+ bigint receiver_id FK
+ numeric amount
+ text status
+ bigint reversal_of FK
+ timestamptz created_at }
+ LEDGER_ENTRIES { bigint entry_id PK
+ bigint transfer_id FK
+ bigint wallet_id FK
+ numeric amount }
+ OUTBOX_EVENTS { bigint event_id PK
+ bigint transfer_id FK
+ text event_type
+ jsonb payload
+ timestamptz created_at
+ timestamptz delivered_at }

@@ -1,0 +1,7 @@
+flowchart LR
+ C[Customer / operations application] --> P[(PostgreSQL primary: authoritative ledger)]
+ P --> O[Transactional outbox]
+ O -. proposed retrying consumer .-> M[(MongoDB risk events)]
+ P -->|local async logical publication| R[(PostgreSQL subscriber: lab probe)]
+ P -. proposed backups / PITR .-> B[Separate backup storage]
+ R -. no automatic promotion .-> A[Operator recovery procedure]

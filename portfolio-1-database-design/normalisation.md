@@ -1,0 +1,10 @@
+# Normalisation through 3NF
+Start with an illustrative unnormalised transfer record: (transfer ID, sender name/email, receiver name/email, wallet currency, amount, {ledger wallet and signed amount} repeated). A repeated ledger group violates 1NF and repeats customer details on every transfer.
+
+1NF: move each ledger occurrence to a row with scalar transfer_id, wallet_id and amount. Make customer contact fields scalar, without comma-separated email lists. JSON outbox payload is a deliberately denormalised integration snapshot outside the authoritative relational facts.
+
+2NF: in a candidate relation keyed by (transfer_id,wallet_id), transfer date and request key depend only on transfer_id; wallet ownership depends only on wallet_id. Move transfer properties to Transfers and wallet properties to Wallets. Ledger_entries retains the compound candidate key plus a surrogate entry_id. No non-key ledger attribute depends on only part of the compound key: the signed amount depends on this transfer-wallet pair.
+
+3NF: customer name/email depend on customer_id rather than transfer_id or wallet_id, so put them in Customers. Do not store customer name or email on Transfers. Functional dependencies: customer_id -> full_name,email,created_at; email -> customer_id (synthetic unique contact); wallet_id -> customer_id,kind,currency; transfer_id and request_key -> all transfer attributes; entry_id and (transfer_id,wallet_id) -> signed amount. These determinants are candidate keys. Wallet balance is a derived aggregate and is exposed as a view, removing a redundant mutable value.
+
+Design concessions: sender/receiver IDs plus signed ledger entries deliberately repeat transaction endpoints to make business intent and reconciliation explicit; triggers check consistency. outbox payload repeats immutable event facts for downstream delivery. A one-value posted status is constrained rather than put in a redundant lookup table. If lifecycle transitions are added, model request/attempt status separately from committed transfers. 3NF is an attribute-dependency property, not a guarantee of concurrency correctness or financial balance.

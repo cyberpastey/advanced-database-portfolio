@@ -1,0 +1,42 @@
+name: payflow-mit8103
+services:
+  postgres:
+    image: postgres:17
+    environment:
+      POSTGRES_DB: payflow
+      POSTGRES_USER: payflow
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
+    ports: ["127.0.0.1:55432:5432"]
+    command: ["postgres", "-c", "wal_level=logical", "-c", "max_replication_slots=5", "-c", "max_wal_senders=5"]
+    volumes: ["pgdata:/var/lib/postgresql/data"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U payflow -d payflow"]
+      interval: 3s
+      timeout: 3s
+      retries: 30
+  replica:
+    image: postgres:17
+    environment:
+      POSTGRES_DB: payflow
+      POSTGRES_USER: payflow
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
+    ports: ["127.0.0.1:55433:5432"]
+    volumes: ["replicadata:/var/lib/postgresql/data"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U payflow -d payflow"]
+      interval: 3s
+      timeout: 3s
+      retries: 30
+  mongo:
+    image: mongo:8.0
+    ports: ["127.0.0.1:57017:27017"]
+    volumes: ["mongodata:/data/db"]
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand({ping:1})"]
+      interval: 3s
+      timeout: 5s
+      retries: 30
+volumes:
+  pgdata:
+  replicadata:
+  mongodata:

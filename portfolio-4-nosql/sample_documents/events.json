@@ -1,0 +1,16 @@
+[
+  {
+    "event_id": "synthetic-1",
+    "wallet_id": 2,
+    "transfer_id": 1,
+    "type": "transfer_review",
+    "occurred_at": {
+      "$date": "2026-01-20T12:00:00Z"
+    },
+    "risk_score": 75,
+    "metadata": {
+      "device": "sim-device-1",
+      "rule": "synthetic_velocity"
+    }
+  }
+]
